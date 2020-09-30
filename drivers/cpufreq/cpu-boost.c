@@ -24,6 +24,30 @@
 #include <linux/input.h>
 #include <linux/time.h>
 #include <linux/battery_saver.h>
+#include <linux/sysfs.h>
+
+
+#define cpu_boost_attr_rw(_name)		\
+static struct kobj_attribute _name##_attr =	\
+__ATTR(_name, 0644, show_##_name, store_##_name)
+
+#define show_one(file_name)			\
+static ssize_t show_##file_name			\
+(struct kobject *kobj, struct kobj_attribute *attr, char *buf)	\
+{								\
+	return scnprintf(buf, PAGE_SIZE, "%u\n", file_name);	\
+}
+
+#define store_one(file_name)					\
+static ssize_t store_##file_name				\
+(struct kobject *kobj, struct kobj_attribute *attr,		\
+const char *buf, size_t count)					\
+{								\
+								\
+	sscanf(buf, "%u", &file_name);				\
+	return count;						\
+}
+>>>>>>> c91ccf17be94 (cpu_boost: Disable input boosting if battery saver is on)
 
 struct cpu_sync {
 	int cpu;
