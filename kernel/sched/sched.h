@@ -32,6 +32,13 @@
 #include <linux/irq_work.h>
 #include <linux/tick.h>
 #include <linux/slab.h>
+#include <linux/suspend.h>
+#include <linux/swait.h>
+#include <linux/syscalls.h>
+#include <linux/task_work.h>
+#include <linux/tsacct_kern.h>
+
+#include <asm/tlb.h>
 #include <linux/battery_saver.h>
 
 #ifdef CONFIG_PARAVIRT
@@ -2900,6 +2907,17 @@ extern unsigned int sched_boost_type;
 static inline int sched_boost(void)
 {
 	return unlikely(is_battery_saver_on()) ? 0 : sched_boost_type;
+}
+
+static inline bool rt_boost_on_big(void)
+{
+	return sched_boost() == FULL_THROTTLE_BOOST ?
+			(sched_boost_policy() == SCHED_BOOST_ON_BIG) : false;
+}
+
+static inline bool is_full_throttle_boost(void)
+{
+	return sched_boost() == FULL_THROTTLE_BOOST;
 }
 
 extern int preferred_cluster(struct sched_cluster *cluster,
