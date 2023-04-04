@@ -24,7 +24,7 @@ jobs:
       run: bash dexk-ci.sh --tools
 
     - name: Build DEXK (UNOFFICIAL) kernel
-      run: bash dexk-ci.sh --build
+      run: bash dexk.sh --build
 
     - name: Upload kernel
       uses: actions/upload-artifact@v3
