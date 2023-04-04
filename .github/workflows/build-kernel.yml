@@ -21,7 +21,7 @@ jobs:
         python-is-python3 schedtool ccache libtinfo5  libncurses5 lzop tmux libssl-dev \
         neofetch patchelf apktool dos2unix git-lfs default-jdk libxml-simple-perl ripgrep clang-11 &> /dev/null
     - name: Download tools
-      run: bash dexk-ci.sh --tools
+      run: bash dexk.sh --tools
 
     - name: Build DEXK (UNOFFICIAL) kernel
       run: bash dexk.sh --build
