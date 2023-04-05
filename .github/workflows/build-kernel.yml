@@ -1,4 +1,4 @@
-name: Build Kernel on GitHub workflows
+name: Build Kernel
 
 on:
   workflow_dispatch:
